@@ -62,7 +62,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "https://todo-list-collab-client-scwc.vercel.app", // your frontend origin
+    origin: "https://todo-list-collab-client-scwc.vercel.app", 
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     credentials: true, // if you're using cookies/auth headers
   },
@@ -70,10 +70,7 @@ const io = new Server(server, {
 
 app.use(
   cors({
-    origin: (origin, callback) => {
-      // Allow all origins but don't break credentialed requests
-      callback(null, origin || "*");
-    },
+    origin: "https://todo-list-collab-client-scwc.vercel.app",
     credentials: true,
   })
 );
