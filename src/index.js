@@ -62,7 +62,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173", // your frontend origin
+    origin: "https://todo-list-collab-client-scwc.vercel.app", // your frontend origin
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     credentials: true, // if you're using cookies/auth headers
   },
