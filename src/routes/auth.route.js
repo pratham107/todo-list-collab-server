@@ -2,6 +2,7 @@ import express from "express";
 import jwt from "jsonwebtoken"
 import User from "../schema/user.schema.js"
 import bcrypt from "bcryptjs";
+import verifyToken from "../middlewares/verifyJwt.middleware.js";
 
 
 const router = express.Router();
@@ -126,6 +127,23 @@ router.post("/logout", (req, res) => {
       message: "User logged out successfully",
       status: true,
     });
+});
+
+router.get("/isLoggedIn",verifyToken, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found", status: false });
+    }
+
+    res.status(200).json({
+      message: "User is logged in",
+      status: true,
+      user,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", status: false });
+  }
 });
 
 

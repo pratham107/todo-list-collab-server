@@ -92,16 +92,12 @@ io.on("connection", (socket) => {
   });
 
   socket.on("new-task", (data) => {
-    
     socket.broadcast.emit("task-added-by-other", data);
   });
 
-
-  socket.on("update-task", ({ taskId, updatedData }) => {
-    console.log("Task update received:", updatedData);
-    // Broadcast to others in the room
-    socket.to(taskId).emit("task-updated", updatedData);
-  });
+  socket.on("task-update",(data)=>{
+    socket.broadcast.emit(`Some Update their Task`, data.task);
+  })
 
   socket.on("disconnect", () => {
     console.log("User disconnected:", socket.id);
@@ -114,7 +110,8 @@ io.on("connection", (socket) => {
 // })
 
 app.use("/auth",authRoutes);
-app.use('/todo',verifyToken,TaskRoutes)
+app.use('/todo',verifyToken,TaskRoutes);
+
 
 server.listen(8000, () => {
   connectDb();

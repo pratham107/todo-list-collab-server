@@ -16,7 +16,6 @@ const verifyToken = (req, res, next) => {
   try {
     // Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET || "myfallbacksecret");
-
     // Attach user info to request object
     req.user = decoded;
 
