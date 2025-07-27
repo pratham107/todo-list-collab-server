@@ -224,7 +224,10 @@ router.get("/all-other-task", async (req, res) => {
     const otherTasks = await Task.find({
       createdBy: { $ne: userId },
       isPrivate: false,
-    }).sort({ dueDate: 1 });
+    }).sort({ dueDate: 1 }).populate({
+        path: "createdBy",
+        select: "username", 
+      });;
 
     return res.status(200).json({
       message: "Public tasks from other users fetched successfully",
