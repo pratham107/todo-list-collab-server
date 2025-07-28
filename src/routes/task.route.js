@@ -17,7 +17,7 @@ router.post("/add-todo",async (req,res)=>{
     }
     
       
-   if (new Date(dueDate).getTime() < Date.now()) {
+   if (new Date(dueDate).getTime() <= Date.now()) {
         return res.status(400).json({
             message: "Due date must be in the future",
             status: false,
