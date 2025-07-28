@@ -17,12 +17,26 @@ router.post("/add-todo",async (req,res)=>{
     }
     
       
-   if (new Date(dueDate).getTime() <= Date.now()) {
-        return res.status(400).json({
-            message: "Due date must be in the future",
-            status: false,
-        });
-    }
+   const due = new Date(dueDate);
+due.setHours(0, 0, 0, 0); // Normalize time to 00:00:00
+
+const today = new Date();
+today.setHours(0, 0, 0, 0); // Normalize today to 00:00:00
+
+if (isNaN(due.getTime())) {
+    return res.status(400).json({
+        message: "Invalid due date format",
+        status: false,
+    });
+}
+
+if (due < today) {
+    return res.status(400).json({
+        message: "Due date must be today or in the future",
+        status: false,
+    });
+}
+
 
     const task = new Task({
         title:title,
